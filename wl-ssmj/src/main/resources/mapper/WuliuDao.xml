@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.WuliuDao">
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.serial as serial
+        ,a.vehicle as vehicle
+        ,a.ship as ship
+        ,a.take as take
+        ,a.wl_types as wlTypes
+        ,a.wlzt_types as wlztTypes
+    </sql>
+
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.WuliuView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM Wuliu  a
+        <where>
+            <if test=" params.serial != '' and params.serial != null and params.serial != 'null' ">
+                and a.serial like CONCAT('%',#{params.serial},'%')
+            </if>
+            <if test=" params.vehicle != '' and params.vehicle != null and params.vehicle != 'null' ">
+                and a.vehicle like CONCAT('%',#{params.vehicle},'%')
+            </if>
+            <if test=" params.ship != '' and params.ship != null and params.ship != 'null' ">
+                and a.ship like CONCAT('%',#{params.ship},'%')
+            </if>
+            <if test=" params.take != '' and params.take != null and params.take != 'null' ">
+                and a.take like CONCAT('%',#{params.take},'%')
+            </if>
+            <if test=" params.wlTypes != '' and params.wlTypes != null and params.wlTypes != 'null' ">
+                and a.wl_types = #{params.wlTypes}
+            </if>
+            <if test=" params.wlztTypes != '' and params.wlztTypes != null and params.wlztTypes != 'null' ">
+                and a.wlzt_types = #{params.wlztTypes}
+            </if>
+        </where>
+        order by a.id desc
+    </select>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.KuaidiDao">
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.serial as serial
+        ,a.vehicle as vehicle
+        ,a.ship as ship
+        ,a.shipr as shipr
+        ,a.take as take
+        ,a.taker as taker
+        ,a.kd_types as kdTypes
+        ,a.kdzt_types as kdztTypes
+    </sql>
+
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.KuaidiView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM Kuaidi  a
+        <where>
+            <if test=" params.serial != '' and params.serial != null and params.serial != 'null' ">
+                and a.serial like CONCAT('%',#{params.serial},'%')
+            </if>
+            <if test=" params.vehicle != '' and params.vehicle != null and params.vehicle != 'null' ">
+                and a.vehicle like CONCAT('%',#{params.vehicle},'%')
+            </if>
+            <if test=" params.ship != '' and params.ship != null and params.ship != 'null' ">
+                and a.ship like CONCAT('%',#{params.ship},'%')
+            </if>
+            <if test=" params.shipr != '' and params.shipr != null and params.shipr != 'null' ">
+                and a.shipr like CONCAT('%',#{params.shipr},'%')
+            </if>
+            <if test=" params.take != '' and params.take != null and params.take != 'null' ">
+                and a.take like CONCAT('%',#{params.take},'%')
+            </if>
+            <if test=" params.taker != '' and params.taker != null and params.taker != 'null' ">
+                and a.taker like CONCAT('%',#{params.taker},'%')
+            </if>
+            <if test=" params.kdTypes != '' and params.kdTypes != null and params.kdTypes != 'null' ">
+                and a.kd_types = #{params.kdTypes}
+            </if>
+            <if test=" params.kdztTypes != '' and params.kdztTypes != null and params.kdztTypes != 'null' ">
+                and a.kdzt_types = #{params.kdztTypes}
+            </if>
+        </where>
+        order by a.id desc
+    </select>
+
+</mapper>
